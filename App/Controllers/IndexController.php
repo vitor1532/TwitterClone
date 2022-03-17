@@ -14,12 +14,17 @@
         //public $caminho='../App/Views/index/';
 
 		public function index() {
-
 			
             $this->render('index');
 		}
 
 		public function inscreverse() {
+
+			$this->view->usuario = [
+					'nome' => '',
+					'email' => '',
+					'senha' => ''
+				];
 
 			$this->view->erroCadastro = false;
 
@@ -47,6 +52,12 @@
 				$this->render('cadastro');
 
 			}else {
+
+				$this->view->usuario = [
+					'nome' => $_POST['nome'],
+					'email' => $_POST['email'],
+					'senha' => $_POST['senha']
+				];
 
 				$this->view->erroCadastro = true;
 				
