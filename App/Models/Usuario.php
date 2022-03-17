@@ -28,13 +28,13 @@
 
 			$query = "INSERT INTO 
 						usuarios(nome, email, senha)
-							VALUES(:nome, :email, :senha)
+							VALUES(?, ?, ?)
 			";
 
 			$stmt = $this->db->prepare($query);
-			$stmt->bindValue(':nome', $this->__get('nome'));
-			$stmt->bindValue(':email', $this->__get('email'));
-			$stmt->bindValue(':senha', $this->__get('senha'));//MD5
+			$stmt->bindValue(1, $this->__get('nome'));
+			$stmt->bindValue(2, $this->__get('email'));
+			$stmt->bindValue(3, $this->__get('senha'));//MD5
 			$stmt->execute();
 
 			return $this;
@@ -70,14 +70,49 @@
 				FROM 
 					usuarios
 				WHERE
-					email = :email
+					email = ?
 			";
 
 			$stmt = $this->db->prepare($query);
-			$stmt->bindValue(':email', $this->__get('email'));
+			$stmt->bindValue(1, $this->__get('email'));
 			$stmt->execute();
 
 			return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+		}
+
+		public function autenticar() {
+
+			$query = "
+				SELECT
+					id, nome, email
+				FROM
+					usuarios
+				WHERE
+					email = ?
+						AND
+					senha = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('email'));
+			$stmt->bindValue(2, $this->__get('senha'));
+			$stmt->execute();
+
+			$usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+			if($usuario) {
+				if($usuario['id'] != '' && $usuario['nome'] != '') {
+
+					$this->__set('id', $usuario['id']);
+					$this->__set('nome', $usuario['nome']);
+
+				}
+			}
+
+			
+
+			return $this;
 
 		}
 

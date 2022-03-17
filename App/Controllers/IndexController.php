@@ -14,6 +14,8 @@
         //public $caminho='../App/Views/index/';
 
 		public function index() {
+
+			$this->view->login = isset($_GET['login']) ? $_GET['login'] : '';
 			
             $this->render('index');
 		}
