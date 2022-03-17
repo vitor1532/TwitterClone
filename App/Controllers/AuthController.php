@@ -19,11 +19,24 @@
 
 			if($usuario->__get('id') != '' && $usuario->__get('nome') != '') {
 
-				echo "autenticado";
+				session_start();
+
+				$_SESSION['id'] = $usuario->__get('id');
+				$_SESSION['nome'] = $usuario->__get('nome');
+
+				header('Location: /timeline');
 
 			} else {
 				header('Location: /?login=erro');
 			}
+
+		}
+
+		public function sair() {
+
+			session_start();
+			session_destroy();
+			header('Location: /');
 
 		}
 

@@ -34,6 +34,20 @@
 				'action' => 'autenticar'
 
 			];
+
+			$routes['sair'] = [
+				'route' => '/sair',
+				'controller' => 'AuthController',
+				'action' => 'sair'
+
+			];
+
+			$routes['timeline'] = [
+				'route' => '/timeline',
+				'controller' => 'AppController',
+				'action' => 'timeline'
+
+			];
 			
 			$this->setRoutes($routes);
 
