@@ -48,6 +48,15 @@
 				'action' => 'timeline'
 
 			];
+
+			$routes['tweet'] = [
+				'route' => '/tweet',
+				'controller' => 'AppController',
+				'action' => 'tweet'
+
+			];
+
+
 			
 			$this->setRoutes($routes);
 
