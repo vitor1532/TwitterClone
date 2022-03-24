@@ -44,6 +44,24 @@
 
 
 		//recuperar
+		public function getAll() {
+
+			$query = "
+				SELECT
+					id, id_usuario, tweet, data
+				FROM 
+					tweets
+				WHERE 
+					id_usuario = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('id_usuario'));
+			$stmt->execute();
+
+			return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+		}
 
 	}
 

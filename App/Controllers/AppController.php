@@ -16,6 +16,19 @@
 
 			if($id != '' && $nome != '') {
 
+				//recuperação dos tweets
+				$tweet = Container::getModel('Tweet');
+
+				$tweet->__set('id_usuario', $_SESSION['id']);
+
+				$tweets = $tweet->getAll();
+
+				echo '<pre>';
+				print_r($tweets);
+				echo '</pre>';
+
+				$this->view->tweets = $tweets;
+
 				$this->render('timeline');
 
 			} else {
