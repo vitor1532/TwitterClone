@@ -48,11 +48,15 @@
 
 			$query = "
 				SELECT
-					id, id_usuario, tweet, data
+					t.id, t.id_usuario, u.nome, t.tweet, DATE_FORMAT(t.data, '%d/%m/%Y %H:%i') AS data
 				FROM 
-					tweets
+					tweets AS t
+						LEFT JOIN 
+							usuarios AS u ON (t.id_usuario = u.id)
 				WHERE 
-					id_usuario = ?
+					t.id_usuario = ?
+				ORDER BY
+					t.data DESC
 			";
 
 			$stmt = $this->db->prepare($query);
