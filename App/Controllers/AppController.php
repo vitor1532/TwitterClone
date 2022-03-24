@@ -21,6 +21,10 @@
 
 			$this->view->tweets = $tweets;
 
+			/*echo '<pre>';
+			print_r($tweets);
+			echo '</pre>';*/
+
 			$this->render('timeline');
 
 		}
@@ -38,6 +42,24 @@
 			$tweet->salvar();
 
 			header('Location: /timeline');
+
+		}
+
+		public function quem_seguir() {
+
+			$this->validaAutenticacao();
+
+			$pesquisarPor = isset($_GET['pesquisarPor']) ? $_GET['pesquisarPor'] : '';
+
+			echo 'Pesquisando por: '.$pesquisarPor;
+
+			if($pesqiusarPor != '') {
+
+				$usuarios = '';
+
+			}
+
+			$this->render('quemSeguir');
 
 		}
 
