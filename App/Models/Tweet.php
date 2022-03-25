@@ -42,6 +42,22 @@
 
 		}
 
+		public function remover() {
+
+			$query = "
+				DELETE FROM
+					tweets
+				WHERE
+					id = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('id'));
+			$stmt->execute();
+			return true;
+
+		}
+
 
 		//recuperar
 		public function getAll() {
