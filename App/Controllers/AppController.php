@@ -90,6 +90,8 @@
 				$usuario->unfollowUser($id_usuario_seguindo);
 			}
 
+			header('Location: /quem_seguir');
+
 		}
 
 		public function validaAutenticacao() {
