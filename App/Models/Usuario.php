@@ -185,6 +185,86 @@
 
 		}
 
+		//info user
+		public function getInfoUser() {
+
+			$query = "
+				SELECT 
+					nome
+				FROM 
+					usuarios
+				WHERE
+					id = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('id'));
+			$stmt->execute();
+
+			return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+		}
+
+		//total tweets
+		public function getTotalTweets() {
+
+			$query = "
+				SELECT 
+					COUNT(*) AS total_tweet
+				FROM 
+					tweets
+				WHERE
+					id_usuario = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('id'));
+			$stmt->execute();
+
+			return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+		}
+
+		//total usuarios que seguimos
+		public function getTotalSeguindo() {
+
+			$query = "
+				SELECT 
+					COUNT(*) AS total_seguindo
+				FROM 
+					usuarios_seguidores
+				WHERE
+					id_usuario = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('id'));
+			$stmt->execute();
+
+			return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+		}
+
+		//total de seguidores
+		public function getTotalSeguidores() {
+
+			$query = "
+				SELECT 
+					COUNT(*) AS total_seguidores
+				FROM 
+					usuarios_seguidores
+				WHERE
+					id_usuario_seguindo = ?
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(1, $this->__get('id'));
+			$stmt->execute();
+
+			return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+		}
+
 	}
 
 
