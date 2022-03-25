@@ -49,26 +49,46 @@
 
 			$this->validaAutenticacao();
 
-			echo '<br><br><br><br><br><br>';
-
 			$pesquisarPor = isset($_GET['pesquisarPor']) ? $_GET['pesquisarPor'] : '';
 
-			echo 'Pesquisando por: '.$pesquisarPor;
+			$usuarios = [];
 
 			if($pesquisarPor != '') {
 
 				$usuario = Container::getModel('Usuario');
 
 				$usuario->__set('nome', $pesquisarPor);
+				$usuario->__set('id', $_SESSION['id']);
 				$usuarios = $usuario->getAll();
-
-				echo '<pre>';
-				print_r($usuarios);
-				echo '</pre>';
 
 			}
 
+			$this->view->usuarios = $usuarios;
+
 			$this->render('quemSeguir');
+
+		}
+
+		public function acao() {
+
+			$this->validaAutenticacao();
+
+			//acao
+			$acao = isset($_GET['acao']) ? $_GET['acao'] : '';
+
+			//id_usuario (usuario que será seguido)
+			$id_usuario_seguindo = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
+
+			$usuario = Container::getModel('Usuario');
+			$usuario->__set('id', $id = $_SESSION['id']);
+
+			if($acao == 'follow') {
+
+				$usuario->followUser($id_usuario_seguindo);
+
+			}else if ($acao == 'unfollow') {
+				$usuario->unfollowUser($id_usuario_seguindo);
+			}
 
 		}
 

@@ -122,14 +122,55 @@
 				FROM
 					usuarios
 				WHERE
-					nome LIKE :nome
+					nome LIKE :nome AND id != :id_usuario
 			";
 
 			$stmt = $this->db->prepare($query);
 			$stmt->bindValue(':nome', '%'.$this->__get('nome').'%');
+			$stmt->bindValue(':id_usuario', $this->__get('id'));
 			$stmt->execute();
 
 			return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		}
+
+		public function followUser($id_usuario_seguindo) {
+			echo 'follow user';
+
+			$query = "
+				INSERT INTO
+					usuarios_seguidores(id_usuario, id_usuario_seguindo)
+				VALUES 
+					(:id_usuario, :id_usuario_seguindo)
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':id_usuario', $this->__get('id'));
+			$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
+			$stmt->execute();
+
+			return true;
+
+		}
+
+		public function unfollowUser($id_usuario_seguindo) {
+			echo 'unfollow user';
+
+			$query = "
+				DELETE FROM
+					usuarios_seguidores
+				WHERE 
+					id_usuario = :id_usuario
+						AND 
+					id_usuario_seguindo = :id_usuario_seguindo
+			";
+
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':id_usuario', $this->__get('id'));
+			$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
+			$stmt->execute();
+
+			return true;
+
 		}
 
 	}
