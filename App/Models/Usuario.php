@@ -122,11 +122,11 @@
 				FROM
 					usuarios
 				WHERE
-					nome LIKE ?
+					nome LIKE :nome
 			";
 
 			$stmt = $this->db->prepare($query);
-			$stmt->bindValue(1, '%'.$this->__get('nome').'%');
+			$stmt->bindValue(':nome', '%'.$this->__get('nome').'%');
 			$stmt->execute();
 
 			return $stmt->fetchAll(\PDO::FETCH_ASSOC);

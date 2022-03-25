@@ -49,13 +49,22 @@
 
 			$this->validaAutenticacao();
 
+			echo '<br><br><br><br><br><br>';
+
 			$pesquisarPor = isset($_GET['pesquisarPor']) ? $_GET['pesquisarPor'] : '';
 
 			echo 'Pesquisando por: '.$pesquisarPor;
 
-			if($pesqiusarPor != '') {
+			if($pesquisarPor != '') {
 
-				$usuarios = '';
+				$usuario = Container::getModel('Usuario');
+
+				$usuario->__set('nome', $pesquisarPor);
+				$usuarios = $usuario->getAll();
+
+				echo '<pre>';
+				print_r($usuarios);
+				echo '</pre>';
 
 			}
 
